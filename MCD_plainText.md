@@ -1,4 +1,4 @@
-### MCD (Modèle Conceptuel de Données) Mis à Jour
+### MCD (Modèle Conceptuel de Données) 
 
 #### Entités et Relations
 
