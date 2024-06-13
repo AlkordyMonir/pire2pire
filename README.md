@@ -8,3 +8,13 @@
 - **Niveau physique** : Décrit les implémentations techniques spécifiques dans la base de données.
 
 La méthode MERISE permet de structurer et de formaliser le processus de développement, améliorant ainsi la communication entre les différents intervenants du projet et la qualité des systèmes d'information.
+![image](https://github.com/AlkordyMonir/pire2pire/assets/129857970/bb20e0c9-61df-42e9-9715-2c5e67c101b8)
+## MCD
+![image](https://github.com/AlkordyMonir/pire2pire/assets/129857970/7a52ebc5-e34b-4c43-8676-311cd329ce97)
+
+## MLD
+
+![image](https://github.com/AlkordyMonir/pire2pire/assets/129857970/144cfd0d-027d-4119-8d3b-64c4f0ac1372)
+
+## MPD
+![image](https://github.com/AlkordyMonir/pire2pire/assets/129857970/2bcd581b-fd9a-4bf2-90ef-e3ae452637fa)
