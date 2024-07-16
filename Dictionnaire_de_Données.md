@@ -1,27 +1,51 @@
+# Dictionnaire de Données #
 
-### Dictionnaire de Données 
-| Nom de la donnée          | Description                              | Type       | Contraintes          |
-|---------------------------|------------------------------------------|------------|----------------------|
-| numero_module             | Numéro du module (Semantic Versionning)  | VARCHAR(20)| PRIMARY KEY          |
-| intitule                  | Intitulé du module                       | VARCHAR(255)| NOT NULL             |
-| objectif_pedagogique      | Objectif pédagogique du module           | TEXT       | NOT NULL             |
-| contenu                   | Contenu du module                        | TEXT       |                      |
-| duree                     | Durée du module en heures                | INTEGER    |                      |
-| tags                      | Tags associés au module                  | VARCHAR(255)|                      |
-| auteur_id                 | ID de l'auteur du module                 | INTEGER    | FOREIGN KEY          |
-| formation_id              | ID de la formation                       | INTEGER    | FOREIGN KEY          |
-| apprenant_id              | ID de l'apprenant                        | INTEGER    | FOREIGN KEY          |
-| etat_fin_module           | État de fin du module (OK / KO)          | VARCHAR(2) |                      |
-| code_formateur            | Code du formateur                        | INTEGER    | PRIMARY KEY          |
-| nom_formateur             | Nom du formateur                         | VARCHAR(255)| NOT NULL             |
-| prenom_formateur          | Prénom du formateur                      | VARCHAR(255)| NOT NULL             |
-| numero_inscription        | Numéro d'inscription de l'apprenant      | INTEGER    | PRIMARY KEY          |
-| nom_apprenant             | Nom de l'apprenant                       | VARCHAR(255)| NOT NULL             |
-| prenom_apprenant          | Prénom de l'apprenant                    | VARCHAR(255)| NOT NULL             |
-| adresse_apprenant         | Adresse de l'apprenant                   | VARCHAR(255)| NOT NULL             |
-| date_naissance_apprenant  | Date de naissance de l'apprenant         | DATE       | NOT NULL             |
-| id_tag                    | ID du tag                                | INTEGER    | PRIMARY KEY          |
-| nom_tag                   | Nom du tag                               | VARCHAR(50) | NOT NULL             |
-| id_contenu                | ID du contenu                            | INTEGER    | PRIMARY KEY          |
-| type_contenu              | Type de contenu (texte, image, vidéo)    | VARCHAR(50)| CHECK (type IN ('texte', 'image', 'vidéo')) NOT NULL |
-| data_contenu              | Données de contenu                       | TEXT       | NOT NULL             |
+### 1. Modules
+
+| **Attribut**                | **Type de Données**      | **Description**                                                                              | **RGs**  |
+|-----------------------------|--------------------------|----------------------------------------------------------------------------------------------|----------|
+| NumModule                   | Chaîne de caractères     | Identifiant unique sous forme de versionnement sémantique (ex. 1.0.0, 1.0.1)                 | RG1      |
+| IntituleModule              | Chaîne de caractères     | Description brève du sujet du module                                                         | RG2      |
+| ObjectifPedagogique         | Texte                    | Objectifs que l'apprenant doit atteindre après avoir complété le module                      | RG3      |
+| Contenu                     | Texte / Image / Vidéo    | Contenu pouvant inclure du texte, des images, et des vidéos                                   | RG4      |
+| DureeModule                 | Entier (heures)          | Temps estimé nécessaire pour compléter le module                                             | RG5      |
+| Tags                        | Chaîne de caractères     | Tags pour faciliter la recherche et le classement                                            | RG6      |
+| AuteurID                    | Référence aux Formateurs | Identifiant unique de l'auteur du module                                                     | RG7      |
+
+### 2. Formations
+
+| **Attribut**                | **Type de Données**      | **Description**                                                                              | **RGs**  |
+|-----------------------------|--------------------------|----------------------------------------------------------------------------------------------|----------|
+| FormationID                 | Chaîne de caractères     | Identifiant unique de la formation                                                            | RG8      |
+| TitreFormation              | Chaîne de caractères     | Titre descriptif de la formation                                                              | RG9      |
+| ModulesFormation            | Liste de références      | Liste des modules composant la formation                                                      | RG10     |
+| EtatCompletion              | Booléen                  | Indicateur de complétion de la formation par l'apprenant                                      | RG11     |
+
+### 3. Apprenants
+
+| **Attribut**                | **Type de Données**      | **Description**                                                                              | **RGs**  |
+|-----------------------------|--------------------------|----------------------------------------------------------------------------------------------|----------|
+| NumInscription              | Chaîne de caractères     | Numéro d'inscription unique de l'apprenant                                                   | RG12     |
+| InfosPersonnelles           | Objet (Nom, Prénom, Adresse, Date de Naissance) | Informations personnelles de l'apprenant                                      | RG13     |
+| FormationsInscrites         | Liste de références      | Formations auxquelles l'apprenant est inscrit                                                | RG14     |
+| ModulesValides              | Liste de références      | Modules validés par l'apprenant                                                              | RG15     |
+| EtatFinModule               | Enumération (OK, KO)     | État d'évaluation de chaque module complété                                                  | RG16, RG17|
+
+### 4. Formateurs
+
+| **Attribut**                | **Type de Données**      | **Description**                                                                              | **RGs**  |
+|-----------------------------|--------------------------|----------------------------------------------------------------------------------------------|----------|
+| FormateurID                 | Chaîne de caractères     | Identifiant unique du formateur                                                              | RG18     |
+| InfosPersonnelles           | Objet (Nom, Prénom)      | Informations personnelles du formateur                                                       | RG19     |
+| ModulesCrees                | Liste de références      | Modules créés par le formateur                                                               | RG20     |
+| RoleFormateur               | Texte                    | Rôle incluant la création, la mise à jour, et la gestion du contenu des modules qu'il a créés | RG21     |
+
+### 5. Inscription et Suivi
+
+| **Attribut**                | **Type de Données**      | **Description**                                                                              | **RGs**  |
+|-----------------------------|--------------------------|----------------------------------------------------------------------------------------------|----------|
+| Inscriptions                | Objet (ApprenantID, FormationID, DateInscription) | Enregistrements des inscriptions des apprenants aux formations              | RG22     |
+| HistoriqueModules           | Objet (ApprenantID, ModuleID, DateValidation)  | Historique des modules validés par chaque apprenant                                         | RG23     |
+| ProgressionApprenants       | Objet (ApprenantID, FormationID, ModulesRestants) | Suivi de la progression de chaque apprenant dans les formations                            | RG24     |
+| StatsValidationModules      | Objet (FormateurID, ModuleID, NombreInscrits, Taux de Validation, Evaluations Apprenants) | Statistiques de validation des modules créés par les formateurs                            | RG25     |
+
